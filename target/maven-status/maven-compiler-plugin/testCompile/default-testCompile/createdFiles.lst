@@ -1,0 +1,10 @@
+com/jurajlazovy/movies/serviceapi/ActorServiceTest.class
+com/jurajlazovy/movies/serviceapi/MovieActorServiceTest.class
+com/jurajlazovy/movies/serviceapi/MovieActorServiceTestBase.class
+com/jurajlazovy/movies/serviceapi/MovieRevenueServiceTest.class
+com/jurajlazovy/movies/serviceapi/MovieServiceTestBase.class
+com/jurajlazovy/movies/serviceapi/DirectorServiceTestBase.class
+com/jurajlazovy/movies/serviceapi/ActorServiceTestBase.class
+com/jurajlazovy/movies/serviceapi/DirectorServiceTest.class
+com/jurajlazovy/movies/serviceapi/MovieServiceTest.class
+com/jurajlazovy/movies/serviceapi/MovieRevenueServiceTestBase.class

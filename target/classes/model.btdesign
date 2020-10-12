@@ -1,0 +1,145 @@
+Application MovieAppTwo {
+    basePackage=com.jurajlazovy
+
+    Module web {
+
+        Resource FrontResource {
+            String front return="front/overview";
+        }
+
+        Resource DirectorResource {
+            scaffold
+        }
+
+        Resource ActorResource {
+            scaffold
+        }
+
+        Resource MovieResource {
+            scaffold
+        }
+
+        Resource MovieRevenueResource {
+            scaffold
+        }
+
+        Resource MovieActorResource {
+            scaffold
+        }
+
+    }
+
+    Module movies {
+
+        Entity Director {
+            scaffold
+            String firstName;
+            String lastName;
+            Date dateOfBirth;
+            String nationality;
+
+            Repository DirectorRepository {
+                findByCondition;
+            }
+         }
+
+        Entity Actor {
+            scaffold
+            String firstName;
+            String lastName;
+            -@Gender gender nullable;
+            Date dateOfBirth;
+
+            Repository ActorRepository {
+                findByCondition;
+            }
+        }
+
+        enum Gender {
+            M, F;
+        }
+
+        Entity Movie {
+            scaffold
+            String movieName;
+            int movieLength;
+            String movieLang;
+            Date releaseDate;
+            String ageCertificate;
+            - @Director director;
+
+            Repository MovieRepository {
+               findByCondition;
+            }
+        }
+
+        Entity MovieRevenue {
+            scaffold
+            - @Movie movie;
+            int domesticTakings;
+            int internationalTakings;
+
+            Repository MovieRevenueRepository {
+                findByCondition;
+            }
+        }
+
+        Entity MovieActor {
+             scaffold
+             - @Movie movie;
+             - @Actor actor;
+
+             Repository MovieActorRepository {
+                 findByCondition;
+             }
+        }
+
+        Service DirectorService {
+            List<@Director> findDirectorsByCondition() throws ParseException;
+            List<@Director> findDirectorsByNationality(String nationality);
+            List<@Director> findAmericanDirectors();
+            findByCondition => DirectorRepository.findByCondition;
+
+            String changeNationality(String firstName, String lastName);
+        }
+
+        Service ActorService {
+            List<@Actor> findActorsByCondition();
+            List<@Actor> findActorsByBirth(Date dateOfBirth);
+            findByCondition => ActorRepository.findByCondition;
+
+            @Actor changeGenderOrBirth(String firstName, String lastName);
+        }
+
+        Service MovieService {
+            List<@Movie> findMoviesByCondition();
+            List<@Movie> findMoviesByDirector(@Director director);
+            List<@Movie> findMoviesByDirectorName(String firstName, String lastName);
+            List<@Movie> findMoviesByLanguages();
+            List<@Movie> countMoviesByDirectors();
+            findByCondition => MovieRepository.findByCondition;
+
+            @Movie changeDirector(String movieName, Date releaseDate);
+
+
+        }
+
+        Service MovieRevenueService {
+            List<@MovieRevenue> findMovieRevenuesByCondition();
+            List<@MovieRevenue> findInternationalMovieRevenues(int internationalTakings);
+            findByCondition => MovieRevenueRepository.findByCondition;
+        }
+
+        Service MovieActorService {
+            List<@MovieActor> findMoviesActorsByCondition();
+            List<@MovieActor> findMoviesByActor(String firstName, String lastName);
+            List<@MovieActor> findActorsInMovie(String movieName, Date releaseDate);
+            List<@MovieActor> findMoviesByActorId(@Actor actor);
+            List<@MovieActor> findActorsByMovieId(@Movie movie);
+            findByCondition => MovieActorRepository.findByCondition;
+
+            @MovieActor changeActor(@Movie movie, @Actor actor);
+            @MovieActor changeMovie(String movieName, Date releaseDate, String firstName, String lastName);
+        }
+    }
+}
